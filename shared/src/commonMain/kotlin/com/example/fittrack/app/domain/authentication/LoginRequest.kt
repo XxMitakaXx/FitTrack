@@ -1,0 +1,9 @@
+package com.example.fittrack.app.domain.authentication
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class LoginRequest(
+    val email: String,
+    val password: String
+)
