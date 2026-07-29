@@ -100,7 +100,7 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(all = 16.dp),
+            .background(color = MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -326,12 +326,7 @@ fun RegisterScreen(
 
         TextButton(
             onClick = { onAction(RegisterAction.OnRegister) },
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.background,
-                    shape = RoundedCornerShape(size = 16.dp)
-                )
-                .width(width = 130.dp),
+            modifier = Modifier.width(width = 130.dp),
             colors = ButtonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,

@@ -5,6 +5,7 @@ import com.example.fittrack.app.domain.authentication.AuthenticationDataSource
 import com.example.fittrack.app.domain.authentication.LogoutRequest
 import com.example.fittrack.app.domain.authentication.RegisterRequest
 import com.example.fittrack.app.domain.jwt.TokenPair
+import com.example.fittrack.core.data.getApiKey
 import com.example.fittrack.core.data.safeCall
 import com.example.fittrack.core.data.util.NetworkError
 import com.example.fittrack.core.data.util.Result
@@ -20,7 +21,7 @@ class RemoteAuthentication(
     override suspend fun login(loginRequest: LoginRequest): Result<TokenPair, NetworkError> {
        return safeCall<TokenPair> {
             httpClient.post(
-               urlString = "http://10.0.2.2:8080/auth/login"
+               urlString = "${getApiKey()}/auth/login"
            ) {
                contentType(type = ContentType.Application.Json)
                setBody(body = loginRequest)
@@ -31,7 +32,7 @@ class RemoteAuthentication(
     override suspend fun register(registerRequest: RegisterRequest): Result<Any, NetworkError> {
         return safeCall<Unit> {
             httpClient.post(
-                urlString = "http://10.0.2.2:8080/auth/register"
+                urlString = "${getApiKey()}/auth/register"
             ) {
                 contentType(type = ContentType.Application.Json)
                 setBody(body = registerRequest)
@@ -42,7 +43,7 @@ class RemoteAuthentication(
     override suspend fun logout(logoutRequest: LogoutRequest): Result<Any, NetworkError> {
         return safeCall<Unit> {
             httpClient.post(
-                urlString = "http://10.0.2.2:8080/auth/logout"
+                urlString = "${getApiKey()}/auth/logout"
             ) {
                 contentType(type = ContentType.Application.Json)
                 setBody(body = logoutRequest)

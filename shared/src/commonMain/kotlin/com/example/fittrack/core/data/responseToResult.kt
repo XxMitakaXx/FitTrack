@@ -20,6 +20,9 @@ suspend inline fun <reified T> responseToResult(
         408 -> Result.Error(error = NetworkError.REQUEST_TIMEOUT)
         429 -> Result.Error(error = NetworkError.TOO_MANY_REQUESTS)
         in 500..599 -> Result.Error(error = NetworkError.SERVER_ERROR)
-        else -> Result.Error(error = NetworkError.UNKNOWN)
+        else -> {
+            val responseStatus = response.status.value
+            Result.Error(error = NetworkError.UNKNOWN)
+        }
     }
 }

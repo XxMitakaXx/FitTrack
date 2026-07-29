@@ -93,8 +93,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(all = 16.dp)
-            .background(color = MaterialTheme.colorScheme.onPrimary),
+            .background(color = MaterialTheme.colorScheme.background.copy(alpha = 0.9f)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -114,7 +113,7 @@ fun LoginScreen(
             label = { Text(text = stringResource(resource = Res.string.email)) },
             modifier = Modifier
                 .padding(all = 10.dp)
-                .focusRequester(focusRequester),
+                .focusRequester(focusRequester = focusRequester),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) }),
             colors = OutlinedTextFieldDefaults.colors(
@@ -158,12 +157,7 @@ fun LoginScreen(
 
         TextButton(
             onClick = { onAction(LoginAction.OnLogin) },
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.background,
-                    shape = RoundedCornerShape(size = 16.dp)
-                )
-                .width(width = 130.dp),
+            modifier = Modifier.width(width = 130.dp),
             colors = ButtonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,

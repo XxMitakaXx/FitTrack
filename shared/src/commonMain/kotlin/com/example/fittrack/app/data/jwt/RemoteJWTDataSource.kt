@@ -3,6 +3,7 @@ package com.example.fittrack.app.data.jwt
 import com.example.fittrack.app.domain.jwt.JWTDataSource
 import com.example.fittrack.app.domain.jwt.RefreshRequest
 import com.example.fittrack.app.domain.jwt.TokenPair
+import com.example.fittrack.core.data.getApiKey
 import com.example.fittrack.core.data.safeCall
 import com.example.fittrack.core.data.util.NetworkError
 import com.example.fittrack.core.data.util.Result
@@ -19,7 +20,7 @@ class RemoteJWTDataSource(
     override suspend fun refreshTokens(refreshToken: String): Result<TokenPair, NetworkError> {
         return safeCall<TokenPair> {
             httpClient.post(
-                urlString = "http://10.0.2.2:8085/auth/refresh"
+                urlString = "${getApiKey()}/auth/refresh"
             ) {
                 contentType(type = ContentType.Application.Json)
                 setBody(

@@ -72,7 +72,9 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.material.icons.extended)
 
+            implementation(libs.kotlinx.datetime)
 
+            implementation(libs.kermit)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)

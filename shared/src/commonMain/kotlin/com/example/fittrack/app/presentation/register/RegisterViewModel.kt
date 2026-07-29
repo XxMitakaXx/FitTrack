@@ -70,6 +70,14 @@ class RegisterViewModel(
         checkPasswordIsBlank()
         checkEmail(_state.value.email)
 
+        val isEmailValid = _state.value.isEmailValid
+        val isPasswordAndConfirmPasswordAreEqual = _state.value.isPasswordAndConfirmPasswordAreEqual
+        val isFirstNameBlank = _state.value.isFirstNameBlank
+        val isLastNameBlank = _state.value.isLastNameBlank
+        val isEmailBlank = _state.value.isEmailBlank
+        val isPasswordBlank = _state.value.isPasswordBlank
+
+
         if (
             !_state.value.isPasswordAndConfirmPasswordAreEqual ||
             _state.value.isFirstNameBlank ||
