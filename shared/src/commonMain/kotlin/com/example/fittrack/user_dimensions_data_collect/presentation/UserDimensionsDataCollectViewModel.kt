@@ -35,7 +35,6 @@ class UserDimensionsDataCollectViewModel(
 
     fun onAction(action: UserDimensionsDataCollectAction) {
         when(action) {
-            is UserDimensionsDataCollectAction.OnWeightValueChange -> editWeight(weight = action.weight)
             is UserDimensionsDataCollectAction.OnHeightValueChange -> editHeight(height = action.height)
             is UserDimensionsDataCollectAction.OnAgeValueChange -> editAge(age = action.age)
             is UserDimensionsDataCollectAction.OnGenderValueChange -> editGender(gender = action.gender)
@@ -47,7 +46,6 @@ class UserDimensionsDataCollectViewModel(
         logger.i(message = "saveUserDimensionsData(): In")
 
         val userDimensionsDataDTO = UserDimensionsDataDTO(
-            weight = _state.value.weight.toInt(),
             height = _state.value.height.toInt(),
             age = _state.value.age.toInt(),
             gender = _state.value.gender
@@ -88,14 +86,4 @@ class UserDimensionsDataCollectViewModel(
             ) }
         }
     }
-
-    private fun editWeight(weight: String) {
-        viewModelScope.launch {
-            _state.update { it.copy(
-                weight = weight
-            ) }
-        }
-    }
-
-
 }

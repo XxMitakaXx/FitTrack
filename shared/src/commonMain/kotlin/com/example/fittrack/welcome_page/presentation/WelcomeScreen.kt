@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -51,53 +52,55 @@ fun WelcomeRoot(
 fun WelcomeScreen(
     onAction: (WelcomeAction) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(all = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(resource = Res.drawable.gear),
-            contentDescription = stringResource(resource = Res.string.welcome_page_image),
-            modifier = Modifier.size(size = 350.dp)
-        )
-
-        Spacer(modifier = Modifier.height(height = 80.dp))
-
-        TextButton(
-            onClick = { onAction(WelcomeAction.OnGoToLogin) },
+    Scaffold {
+        Column(
             modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(size = 6.dp)
-                )
-                .padding(horizontal = 42.dp)
+                .fillMaxSize()
+                .padding(all = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = stringResource(resource = Res.string.login),
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 20.sp
+            Image(
+                painter = painterResource(resource = Res.drawable.gear),
+                contentDescription = stringResource(resource = Res.string.welcome_page_image),
+                modifier = Modifier.size(size = 350.dp)
             )
-        }
 
-        Spacer(modifier = Modifier.height(height = 30.dp))
+            Spacer(modifier = Modifier.height(height = 80.dp))
 
-        TextButton(
-            onClick = { onAction(WelcomeAction.OnGoToRegister) },
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(size = 6.dp)
+            TextButton(
+                onClick = { onAction(WelcomeAction.OnGoToLogin) },
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(size = 6.dp)
+                    )
+                    .padding(horizontal = 42.dp)
+            ) {
+                Text(
+                    text = stringResource(resource = Res.string.login),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 20.sp
                 )
-                .padding(horizontal = 30.dp)
-        ) {
-            Text(
-                text = stringResource(resource = Res.string.register),
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 20.sp
-            )
+            }
+
+            Spacer(modifier = Modifier.height(height = 30.dp))
+
+            TextButton(
+                onClick = { onAction(WelcomeAction.OnGoToRegister) },
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(size = 6.dp)
+                    )
+                    .padding(horizontal = 30.dp)
+            ) {
+                Text(
+                    text = stringResource(resource = Res.string.register),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 20.sp
+                )
+            }
         }
     }
 }

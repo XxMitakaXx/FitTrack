@@ -33,7 +33,7 @@ val LightColors = lightColorScheme(
     onError = Color(0xFFFFFFFF)
 )
 
-val DarkColors = darkColorScheme(
+val colorScheme = darkColorScheme(
     primary = GreenPrimaryDark,
     onPrimary = GreenOnPrimaryDark,
     primaryContainer = GreenContainerDark,

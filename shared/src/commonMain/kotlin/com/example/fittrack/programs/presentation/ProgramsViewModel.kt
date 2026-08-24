@@ -80,33 +80,28 @@ class ProgramsViewModel(
         }
     }
 
-
     private fun fetchPrograms(): Flow<List<ProgramDTO>> {
         val programList = MutableStateFlow<List<ProgramDTO>>(value = emptyList())
 
         viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    isLoadingData = true
-                )
-            }
+            _state.update { it.copy(
+                isLoadingData = true
+            ) }
 
             programDataSource
                 .observePrograms()
                 .onSuccess { programs ->
-                    _state.update {
-                        it.copy(
-                            hasRecordedPrograms = programs.isNotEmpty(),
-                            isLoadingData = false
-                        )
-                    }
-
-
+                    _state.update { it.copy(
+                        hasRecordedPrograms = programs.isNotEmpty(),
+                        isLoadingData = false
+                    ) }
 
                     programList.emit(value = programs)
                 }
                 .onError { networkError ->
-
+                    _state.update { it.copy(
+                        isLoadingData = false
+                    ) }
                 }
         }
 

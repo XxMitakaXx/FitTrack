@@ -125,28 +125,6 @@ fun UserDimensionsDataCollectScreen(
             Spacer(modifier = Modifier.height(height = 60.dp))
 
             OutlinedTextField(
-                value = state.weight,
-                onValueChange = { onAction(UserDimensionsDataCollectAction.OnWeightValueChange(weight = it)) },
-                singleLine = true,
-                label = { Text(text = stringResource(resource = Res.string.weight)) },
-                modifier = Modifier
-                    .padding(all = 10.dp)
-                    .focusRequester(focusRequester = focusRequester),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                    keyboardType = KeyboardType.Number
-                ),
-                keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(focusDirection = FocusDirection.Next) }),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                    focusedPlaceholderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedTextColor = MaterialTheme.colorScheme.primary
-                ),
-                shape = RoundedCornerShape(size = 16.dp),
-            )
-
-            OutlinedTextField(
                 value = state.height,
                 onValueChange = { onAction(UserDimensionsDataCollectAction.OnHeightValueChange(height = it)) },
                 singleLine = true,

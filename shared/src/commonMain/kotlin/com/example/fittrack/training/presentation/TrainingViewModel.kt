@@ -36,8 +36,8 @@ class TrainingViewModel(
             observeUserTrainingData()
         }
         .stateIn(
-            scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 0L),
+            scope = viewModelScope,
             initialValue = TrainingState()
         )
 
@@ -47,7 +47,7 @@ class TrainingViewModel(
     private val userTrainingData = fetchUserData()
         .flowOn(context = Dispatchers.Default)
 
-    private val stringsFlow = MutableStateFlow<String>(value = "")
+    private val stringsFlow = MutableStateFlow(value = "")
 
     fun onAction(action: TrainingAction) {
         when(action) {
@@ -55,7 +55,6 @@ class TrainingViewModel(
             is TrainingAction.OnHistoryButtonClick -> makeHistoryScreenVisible()
             is TrainingAction.OnNavigateToProgramsScreen -> navigateToProgramsScreen()
             is TrainingAction.OnNavigateToAddUserTrainingDataScreen -> navigateToAddUserTrainingDataScreen()
-            is TrainingAction.OnUserTrainingDataSave -> saveUserTrainingData()
             is TrainingAction.OnSelectedPopupDate -> onSelectedPopupDate(localDate = action.localDate)
             is TrainingAction.OnSelectedPopupWeight -> onSelectedPopupWeight(weight = action.weight)
             is TrainingAction.OnSelectedPopupWeightDimensions -> onSelectedPopupWeightDimensions(weightDimension = action.weightDimension)
@@ -143,10 +142,6 @@ class TrainingViewModel(
         }
     }
 
-    private fun saveUserTrainingData() {
-
-    }
-
     private fun navigateToProgramsScreen() {
         viewModelScope.launch {
             _events.send(element = TrainingEvent.OnNavigateToProgramsScreen)
@@ -175,7 +170,8 @@ class TrainingViewModel(
     }
 
     private fun fetchUserData(): Flow<UserTrainingData> {
-        val userTrainingData = MutableStateFlow<UserTrainingData>(value = UserTrainingData())
+        logger.i(message = "fetchUserData(): In")
+        val userTrainingData = MutableStateFlow(value = UserTrainingData())
         viewModelScope.launch {
             _state.update { it.copy(
                 isLoadingData = true
@@ -193,7 +189,9 @@ class TrainingViewModel(
                     userTrainingData.emit(value = userTrainingDataDTO.toUserTrainingData())
                 }
                 .onError { networkError ->
-
+                    _state.update { it.copy(
+                        isLoadingData = false
+                    ) }
                 }
         }
 
@@ -207,7 +205,7 @@ class TrainingViewModel(
         }
 
         val userProgressInWeek = _state.value.userTrainingData?.activeProgram?.userProgress?.week
-        val userProgressInDay = _state.value.userTrainingData?.activeProgram?.userProgress?.day?.toInt()
+        val userProgressInDay = _state.value.userTrainingData?.activeProgram?.userProgress?.day
 
         userProgressInWeek?.let {
             userProgressInDay?.let {

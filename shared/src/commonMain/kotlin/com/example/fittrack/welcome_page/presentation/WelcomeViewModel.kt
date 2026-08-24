@@ -20,7 +20,7 @@ class WelcomeViewModel: ViewModel() {
                 navigateToRegister()
             }
         }
-        }
+    }
 
     private fun navigateToRegister() {
         viewModelScope.launch {

@@ -8,7 +8,6 @@ sealed interface TrainingAction {
     data object OnHistoryButtonClick: TrainingAction
     data object OnNavigateToProgramsScreen: TrainingAction
     data object OnNavigateToAddUserTrainingDataScreen: TrainingAction
-    data object OnUserTrainingDataSave: TrainingAction
     data class OnSelectedPopupDate(val localDate: LocalDate): TrainingAction
     data class OnSelectedPopupWeight(val weight: String): TrainingAction
     data class OnSelectedPopupWeightDimensions(val weightDimension: WeightDimension): TrainingAction

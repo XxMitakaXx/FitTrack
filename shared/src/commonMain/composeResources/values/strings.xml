@@ -59,4 +59,16 @@
     <string name="log_bodyweight">Log Bodyweight</string>
     <string name="kg">Kg</string>
     <string name="lbs">Lbs</string>
+    <string name="arrow_right">Arrow Right</string>
+    <string name="arrow_down">Arrow Down</string>
+    <string name="delete">Delete</string>
+    <string name="average">Average</string>
+    <string name="change">Change</string>
+    <string name="current">Current</string>
+    <string name="highest">Highest</string>
+    <string name="lowest">Lowest</string>
+    <string name="public">Public</string>
+    <string name="private">Private</string>
+    <string name="saved">Saved</string>
+    <string name="create_your_program">Create Your Program</string>
 </resources>

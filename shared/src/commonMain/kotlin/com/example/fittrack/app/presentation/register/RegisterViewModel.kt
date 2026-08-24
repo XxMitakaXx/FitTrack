@@ -47,7 +47,7 @@ class RegisterViewModel(
     }
 
     private fun checkPasswordAndConfirmPasswordAreEqual() {
-        if (_state.value.password != _state.value.confirmPassword) {
+        if (_state.value.password.trim() != _state.value.confirmPassword.trim()) {
             viewModelScope.launch {
                 _state.update { it.copy(
                     isPasswordAndConfirmPasswordAreEqual = false
@@ -90,10 +90,10 @@ class RegisterViewModel(
         viewModelScope.launch {
             authenticationDataSource.register(
                 registerRequest = RegisterRequest(
-                    firstName = _state.value.firstName,
-                    lastName = _state.value.lastName,
-                    email = _state.value.email,
-                    password = _state.value.password
+                    firstName = _state.value.firstName.trim(),
+                    lastName = _state.value.lastName.trim(),
+                    email = _state.value.email.trim(),
+                    password = _state.value.password.trim()
                 )
             )
                 .onSuccess {

@@ -70,8 +70,8 @@ class LoginViewModel(
         viewModelScope.launch {
             authenticationDataSource.login(
                 loginRequest = LoginRequest(
-                    email = _state.value.email,
-                    password = _state.value.password
+                    email = _state.value.email.trim(),
+                    password = _state.value.password.trim()
                 )
             )
                 .onSuccess { tokenPair ->

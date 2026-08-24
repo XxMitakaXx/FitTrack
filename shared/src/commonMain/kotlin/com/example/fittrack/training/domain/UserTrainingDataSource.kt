@@ -8,4 +8,5 @@ import com.example.fittrack.training.domain.models.dtos.UserTrainingDataDTO
 interface UserTrainingDataSource {
     suspend fun fetchUserTrainingData(): Result<UserTrainingDataDTO, NetworkError>
     suspend fun saveUserBodyWeight(progressBodyWeightDTO: ProgressBodyWeightDTO): Result<Unit, NetworkError>
+    suspend fun deleteUserBodyWeight(progressBodyWeightDTO: ProgressBodyWeightDTO): Result<Unit, NetworkError>
 }

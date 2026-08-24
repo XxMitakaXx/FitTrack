@@ -9,6 +9,7 @@ import com.example.fittrack.training.domain.UserTrainingDataSource
 import com.example.fittrack.training.domain.models.dtos.ProgressBodyWeightDTO
 import com.example.fittrack.training.domain.models.dtos.UserTrainingDataDTO
 import io.ktor.client.HttpClient
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -36,6 +37,18 @@ class RemoteUserTrainingDataSource(
                 urlString = "${getApiKey()}/users/progress_weight"
             ) {
                 header(key = "Authorization", value = "Bearer ${jwtUtil.tokenPair?.accessToken}")
+                contentType(type = ContentType.Application.Json)
+                setBody(body = progressBodyWeightDTO)
+            }
+        }
+    }
+
+    override suspend fun deleteUserBodyWeight(progressBodyWeightDTO: ProgressBodyWeightDTO): Result<Unit, NetworkError> {
+        return safeCall<Unit> {
+            httpClient.delete(
+                urlString = "${getApiKey()}/users/progress_bodyweight"
+            ) {
+                header("Authorization", "Bearer ${jwtUtil.tokenPair?.accessToken}")
                 contentType(type = ContentType.Application.Json)
                 setBody(body = progressBodyWeightDTO)
             }

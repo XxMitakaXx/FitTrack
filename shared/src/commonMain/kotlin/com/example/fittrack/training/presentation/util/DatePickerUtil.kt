@@ -29,3 +29,15 @@ fun LazyListState.centerItemIndex(): Int {
 
     return ((centerItem?.index ?: 1) -1).coerceAtLeast(minimumValue = 0)
 }
+
+fun isLeapYear(year: Int): Boolean {
+    return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
+}
+
+fun getDaysInMonth(month: Int, year: Int): Int {
+    return when (month) {
+        4, 6, 9, 11 -> 30
+        2 -> if (isLeapYear(year = year)) 29 else 28
+        else -> 31
+    }
+}

@@ -14,6 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.fittrack.programs.presentation.components.ExploreScreen
+import com.example.fittrack.programs.presentation.components.LibraryScreen
+import com.example.fittrack.programs.presentation.components.ProgramsScreenTopBar
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -84,9 +87,15 @@ fun ProgramsScreen(
                 }
             ) { isExploreScreenVisible ->
                 if (isExploreScreenVisible) {
-
+                    ExploreScreen(
+                        onAction = onAction,
+                        state = state
+                    )
                 } else {
-
+                    LibraryScreen(
+                        onAction = onAction,
+                        state =  state
+                    )
                 }
             }
         }

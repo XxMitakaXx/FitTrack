@@ -15,13 +15,17 @@ import com.example.fittrack.training.domain.models.ProgressBodyWeight
 import com.example.fittrack.training.domain.models.dtos.ProgressBodyWeightDTO
 import com.example.fittrack.training.domain.models.enums.WeightDimension
 import com.example.fittrack.training.presentation.util.lbsToKg
-import io.ktor.util.Hash.combine
+import com.example.fittrack.training.presentation.util.toProgressBodyWeightDTO
+import com.example.fittrack.training.presentation.util.toUserTrainingData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -36,17 +40,17 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
+import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.char
 import kotlinx.datetime.minus
-import kotlinx.datetime.plus
 import kotlinx.datetime.todayIn
 import kotlin.collections.groupBy
 import kotlin.time.Clock
 
 class BodyWeightViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val logger: AppLogger,
-    private val userTrainingDataSource: UserTrainingDataSource,
+    private val userTrainingDataSource: UserTrainingDataSource
 ): ViewModel() {
     private val selectedTimeFilter = MutableStateFlow(value = ProgressBodyWeightTime.ALL)
     private val _state = MutableStateFlow(value = BodyWeightState())
@@ -63,9 +67,15 @@ class BodyWeightViewModel(
     private val _events = Channel<BodyWeightEvent>()
     val events = _events.receiveAsFlow()
 
-    private val route = savedStateHandle.toRoute<NavigationRoute.BodyWeightProgressScreen>()
-    private val progressBodyWeights = flowOf(value = route.toProgressBodyWeights())
-        .filterByTime()
+    private val refreshTrigger = MutableSharedFlow<Unit>(replay = 1)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private var progressBodyWeights = refreshTrigger
+        .flatMapLatest {
+            fetchProgressBodyWeights()
+                .filterByTime()
+        }
+        .flowOn(context = Dispatchers.Default)
 
     fun onAction(action: BodyWeightAction) {
         when(action) {
@@ -75,7 +85,97 @@ class BodyWeightViewModel(
             is BodyWeightAction.OnSelectedPopupWeight -> editWeight(weight = action.weight)
             is BodyWeightAction.OnSelectedPopupWeightDimensions -> editWeightDimensions(action.weightDimension)
             is BodyWeightAction.OnSaveBodyWeight -> saveBodyWeight()
-            is BodyWeightAction.OnMonthListClick -> {}
+            is BodyWeightAction.OnMonthListClick -> onUnfoldedMonthWeightProgressesClick(action.dateString)
+            is BodyWeightAction.OnProgressBodyWeightItemDelete -> onProgressBodyWeightItemDelete(action.dateString)
+            is BodyWeightAction.OnProgressBodyWeightTimeChange -> selectedTimeFilterChange(progressBodyWeightTime = action.progressBodyWeightTime)
+        }
+    }
+
+    init {
+        refreshProgressBodyWeights()
+    }
+
+    private fun selectedTimeFilterChange(progressBodyWeightTime: ProgressBodyWeightTime) {
+        selectedTimeFilter.value = progressBodyWeightTime
+
+        _state.update { it.copy(
+            selectedTimeFilter = progressBodyWeightTime
+        ) }
+    }
+
+    private fun refreshProgressBodyWeights() {
+        refreshTrigger.tryEmit(value = Unit)
+    }
+
+    private fun fetchProgressBodyWeights(): Flow<List<ProgressBodyWeight>> {
+        val progressBodyWeights = MutableStateFlow<List<ProgressBodyWeight>>(value = emptyList())
+        viewModelScope.launch {
+            _state.update { it.copy(
+                isLoadingData = true
+            ) }
+
+            userTrainingDataSource
+                .fetchUserTrainingData()
+                .onSuccess { userTrainingDataDTO ->
+                    _state.update { it.copy(
+                        isLoadingData = false
+                    ) }
+                    val fetchedProgressBodyWeighs = userTrainingDataDTO
+                        .toUserTrainingData()
+                        .userStats
+                        ?.progressBodyWeights ?: emptyList()
+
+                    progressBodyWeights.emit(value = fetchedProgressBodyWeighs)
+                }
+                .onError { networkError ->
+                    _state.update { it.copy(
+                        isLoadingData = false
+                    ) }
+                }
+        }
+
+        return progressBodyWeights
+    }
+
+    private fun onProgressBodyWeightItemDelete(dateString: String) {
+        _state.value.progressBodyWeights.forEach { progressBodyWeightsMap ->
+            progressBodyWeightsMap.value.forEach { progressBodyWeight ->
+                if (progressBodyWeight.recordedAt.toString() == dateString) {
+                    viewModelScope.launch {
+                        userTrainingDataSource.deleteUserBodyWeight(progressBodyWeightDTO = progressBodyWeight.toProgressBodyWeightDTO())
+                            .onSuccess {
+                                refreshProgressBodyWeights()
+                            }
+                            .onError { networkError ->
+
+                            }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onUnfoldedMonthWeightProgressesClick(dateString: String) {
+        if (dateString in _state.value.unfoldedMonthWeightProgressesKeys) {
+            removeUnfoldedMonthWeightProgresses(dateString = dateString)
+        } else {
+            addUnfoldedMonthWeightProgresses(dateString = dateString)
+        }
+    }
+
+    private fun removeUnfoldedMonthWeightProgresses(dateString: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(
+                unfoldedMonthWeightProgressesKeys = _state.value.unfoldedMonthWeightProgressesKeys - dateString
+            ) }
+        }
+    }
+
+    private fun addUnfoldedMonthWeightProgresses(dateString: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(
+                unfoldedMonthWeightProgressesKeys = _state.value.unfoldedMonthWeightProgressesKeys + dateString
+            ) }
         }
     }
 
@@ -95,6 +195,7 @@ class BodyWeightViewModel(
             userTrainingDataSource.saveUserBodyWeight(progressBodyWeightDTO = progressBodyWeightDTO)
                 .onSuccess {
                     makePopupNotVisible()
+                    refreshProgressBodyWeights()
                 }
                 .onError {
 
@@ -198,24 +299,15 @@ class BodyWeightViewModel(
     private fun Flow<List<ProgressBodyWeight>>.groupByRelativeDate(): Flow<Map<String, List<ProgressBodyWeight>>> {
         val formatter = LocalDate.Format {
             year()
-            char('/')
-            monthNumber()
-            char('/')
-            day()
+            char(' ')
+            monthName(names = MonthNames.ENGLISH_FULL)
         }
         return map { progressBodyWeights ->
             progressBodyWeights
-                .groupBy { progressBodyWeight ->
-                    progressBodyWeight.recordedAt
-                }
+                .sortedByDescending { it.recordedAt }
+                .groupBy { it.recordedAt.format(format = formatter) }
                 .mapValues { (_, progressBodyWeights) ->
-                    progressBodyWeights.sortedBy { progressBodyWeight -> progressBodyWeight.recordedAt}
-                }
-                .toList()
-                .sortedByDescending { it.first }
-                .toMap()
-                .mapKeys { (date, _) ->
-                    date.format(format = formatter)
+                    progressBodyWeights.sortedBy { it.recordedAt }
                 }
         }
     }
