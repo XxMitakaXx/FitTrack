@@ -18,5 +18,7 @@ data class ProgramDTO(
     val timePerWorkoutMinutes: Int,
     val rate: Double,
     val equipment: String,
-    val reviews: List<ReviewDTO>
+    val imageUrl: String,
+    val reviews: List<ReviewDTO>,
+    val isPublic: Boolean
 )

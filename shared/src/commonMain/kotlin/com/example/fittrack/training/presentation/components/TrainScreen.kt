@@ -191,7 +191,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -217,7 +218,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -255,7 +257,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -304,7 +307,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -330,7 +334,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -385,7 +390,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -411,7 +417,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -449,7 +456,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -498,7 +506,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -524,7 +533,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -579,7 +589,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -605,7 +616,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -643,7 +655,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -692,7 +705,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -718,7 +732,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -773,7 +788,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -799,7 +815,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -837,7 +854,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )
@@ -886,7 +904,8 @@ fun TrainingScreenPreview() {
                                                                 number = 5
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     ),
                                                     Exercise(
                                                         exerciseId = Uuid.random(),
@@ -912,7 +931,8 @@ fun TrainingScreenPreview() {
                                                                 number = 3
                                                             )
                                                         ),
-                                                        targetReps = 8
+                                                        targetReps = 8,
+                                                        targetKg = 40.00
                                                     )
                                                 )
                                             )

@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -90,6 +91,14 @@ fun LoginScreen(
     }
     val focusManager = LocalFocusManager.current
 
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = MaterialTheme.colorScheme.primary,
+        unfocusedTextColor = MaterialTheme.colorScheme.primary,
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        unfocusedBorderColor = MaterialTheme.colorScheme.primary,
+        focusedPlaceholderColor = MaterialTheme.colorScheme.primary
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -114,14 +123,12 @@ fun LoginScreen(
             modifier = Modifier
                 .padding(all = 10.dp)
                 .focusRequester(focusRequester = focusRequester),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                focusedPlaceholderColor = MaterialTheme.colorScheme.primary,
-                unfocusedTextColor = MaterialTheme.colorScheme.primary
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
             ),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) }),
+            colors = textFieldColors,
             shape = RoundedCornerShape(size = 16.dp)
         )
 
@@ -136,8 +143,12 @@ fun LoginScreen(
                 .padding(all = 10.dp)
                 .focusRequester(focusRequester = focusRequester),
             visualTransformation = if (!state.isPasswordVisible) PasswordVisualTransformation() else VisualTransformation.None,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            colors = textFieldColors,
             trailingIcon = {
                 val icon = if (state.isPasswordVisible) Icons.Default.Lock else Icons.Default.CheckCircle
                 val description = if (state.isPasswordVisible) stringResource(resource = Res.string.hide_password) else stringResource(resource = Res.string.show_password)

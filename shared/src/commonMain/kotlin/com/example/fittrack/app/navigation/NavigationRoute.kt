@@ -31,4 +31,6 @@ sealed interface NavigationRoute {
         val progressBodyWeightsJson: String
     )
 
+    @Serializable
+    data object AddExerciseVarietyScreen
 }

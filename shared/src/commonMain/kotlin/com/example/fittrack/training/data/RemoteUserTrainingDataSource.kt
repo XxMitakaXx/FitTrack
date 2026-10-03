@@ -2,6 +2,7 @@ package com.example.fittrack.training.data
 
 import com.example.fittrack.app.data.jwt.JWTUtil
 import com.example.fittrack.core.data.getApiKey
+import com.example.fittrack.core.data.getNGROKKey
 import com.example.fittrack.core.data.safeCall
 import com.example.fittrack.core.data.util.NetworkError
 import com.example.fittrack.core.data.util.Result
@@ -24,7 +25,7 @@ class RemoteUserTrainingDataSource(
     override suspend fun fetchUserTrainingData(): Result<UserTrainingDataDTO, NetworkError> {
         return safeCall<UserTrainingDataDTO> {
             httpClient.get(
-                urlString = "${getApiKey()}/users/user-training-data"
+                urlString = "${getNGROKKey()}/users/user-training-data"
             ) {
                 header(key = "Authorization", value = "Bearer ${jwtUtil.tokenPair?.accessToken}")
             }
@@ -34,7 +35,7 @@ class RemoteUserTrainingDataSource(
     override suspend fun saveUserBodyWeight(progressBodyWeightDTO: ProgressBodyWeightDTO): Result<Unit, NetworkError> {
         return safeCall<Unit> {
             httpClient.post(
-                urlString = "${getApiKey()}/users/progress_weight"
+                urlString = "${getNGROKKey()}/users/progress_weight"
             ) {
                 header(key = "Authorization", value = "Bearer ${jwtUtil.tokenPair?.accessToken}")
                 contentType(type = ContentType.Application.Json)
@@ -46,7 +47,7 @@ class RemoteUserTrainingDataSource(
     override suspend fun deleteUserBodyWeight(progressBodyWeightDTO: ProgressBodyWeightDTO): Result<Unit, NetworkError> {
         return safeCall<Unit> {
             httpClient.delete(
-                urlString = "${getApiKey()}/users/progress_bodyweight"
+                urlString = "${getNGROKKey()}/users/progress_bodyweight"
             ) {
                 header("Authorization", "Bearer ${jwtUtil.tokenPair?.accessToken}")
                 contentType(type = ContentType.Application.Json)

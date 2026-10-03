@@ -39,7 +39,9 @@ fun ProgramDTO.toProgram(): Program {
         totalCountUsed = this.totalCountUsed,
         rate = this.rate,
         equipment = Equipment.valueOf(value = this.equipment),
-        reviews = this.reviews.map { reviewDTO -> reviewDTO.toReview() }
+        imageUrl = this.imageUrl,
+        reviews = this.reviews.map { reviewDTO -> reviewDTO.toReview() },
+        isPublic = this.isPublic
     )
 }
 
@@ -72,6 +74,7 @@ private fun ExerciseDTO.toExercise(): Exercise {
         name = this.name,
         pictureUrl = this.pictureUrl,
         targetReps = this.targetReps,
+        targetKg = this.targetKg,
         trainingSets = this.sets.map { trainingSetDTO -> trainingSetDTO.toTrainingSet() },
     )
 }

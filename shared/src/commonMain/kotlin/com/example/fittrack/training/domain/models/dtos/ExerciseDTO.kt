@@ -8,5 +8,6 @@ data class ExerciseDTO(
     val name: String,
     val pictureUrl: String,
     val targetReps: Int,
+    val targetKg: Double,
     val sets: List<TrainingSetDTO>
 )

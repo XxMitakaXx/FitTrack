@@ -22,5 +22,7 @@ data class Program(
     val totalCountUsed: Int,
     val rate: Double,
     val equipment: Equipment,
-    val reviews: List<Review>
+    val imageUrl: String,
+    val reviews: List<Review>,
+    val isPublic: Boolean
 )

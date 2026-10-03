@@ -75,6 +75,8 @@ kotlin {
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.kermit)
+
+            implementation(libs.coil.compose)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.fittrack.add_exercise.presentation.AddExerciseRoot
 import com.example.fittrack.app.navigation.components.NavigationBar
 import com.example.fittrack.app.presentation.login.LoginRoot
 import com.example.fittrack.app.presentation.register.RegisterRoot
@@ -60,6 +61,7 @@ fun AppNavigation(
 
         composable<NavigationRoute.ProgramsScreen> {
             ProgramsRoot(
+                onNavigateToAddExerciseVariety = { navController.navigate(route = NavigationRoute.AddExerciseVarietyScreen) },
                 bottomNavigationBar = {
                     NavigationBar(
                         currentPage = NavigationRoute.ProgramsScreen,
@@ -84,6 +86,12 @@ fun AppNavigation(
         composable<NavigationRoute.BodyWeightProgressScreen> {
             BodyWeightRoot(
                 onNavigateToTrainingScreen = { navController.navigate(route = NavigationRoute.TrainingScreen) }
+            )
+        }
+
+        composable<NavigationRoute.AddExerciseVarietyScreen> {
+            AddExerciseRoot(
+                onNavigateToProgramScreen = { navController.navigate(route = NavigationRoute.ProgramsScreen) }
             )
         }
     }

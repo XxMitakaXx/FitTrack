@@ -123,6 +123,7 @@ private fun ExerciseDTO.toExercise(): Exercise {
         name = this.name,
         pictureUrl = this.pictureUrl,
         targetReps = this.targetReps,
+        targetKg = this.targetKg,
         trainingSets = this.sets.map { trainingSetDTO -> trainingSetDTO.toTrainingSet() },
     )
 }

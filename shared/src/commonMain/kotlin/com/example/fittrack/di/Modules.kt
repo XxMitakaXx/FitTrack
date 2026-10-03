@@ -1,5 +1,8 @@
 package com.example.fittrack.di
 
+import com.example.fittrack.add_exercise.data.RemoteAddExerciseDataSource
+import com.example.fittrack.add_exercise.domain.AddExerciseDataSource
+import com.example.fittrack.add_exercise.presentation.AddExerciseViewModel
 import com.example.fittrack.app.data.authentication.RemoteAuthentication
 import com.example.fittrack.app.data.jwt.JWTUtil
 import com.example.fittrack.app.data.jwt.RemoteJWTDataSource
@@ -34,6 +37,7 @@ val sharedModule = module {
     singleOf(::RemoteProgramDataSource).bind<ProgramDataSource>()
     singleOf(::RemoteUserTrainingDataSource).bind<UserTrainingDataSource>()
     singleOf(::RemoteUserDimensionsDataSource).bind<UserDimensionsDataSource>()
+    singleOf(::RemoteAddExerciseDataSource).bind<AddExerciseDataSource>()
     singleOf(::KermitAppLogger).bind<AppLogger>()
 
     singleOf(::JWTUtil)
@@ -41,8 +45,9 @@ val sharedModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::RegisterViewModel)
     viewModelOf(::TrainingViewModel)
-    singleOf(::ProgramsViewModel)
+    viewModelOf(::ProgramsViewModel)
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::UserDimensionsDataCollectViewModel)
     viewModelOf(::BodyWeightViewModel)
+    viewModelOf(::AddExerciseViewModel)
 }

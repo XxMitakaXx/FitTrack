@@ -22,6 +22,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun ProgramsRoot(
     viewModel: ProgramsViewModel = koinViewModel(),
+    onNavigateToAddExerciseVariety: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -31,6 +32,7 @@ fun ProgramsRoot(
         onAction = { action ->
             viewModel.onAction(action = action)
         },
+        onNavigateToAddExerciseVariety = onNavigateToAddExerciseVariety,
         bottomNavigationBar = bottomNavigationBar
     )
 }
@@ -39,6 +41,7 @@ fun ProgramsRoot(
 fun ProgramsScreen(
     state: ProgramsState,
     onAction: (ProgramsAction) -> Unit,
+    onNavigateToAddExerciseVariety: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit
 ) {
     Scaffold(
@@ -94,7 +97,8 @@ fun ProgramsScreen(
                 } else {
                     LibraryScreen(
                         onAction = onAction,
-                        state =  state
+                        state =  state,
+                        onNavigateToAddExerciseVariety = onNavigateToAddExerciseVariety
                     )
                 }
             }

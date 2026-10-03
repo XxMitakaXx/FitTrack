@@ -7,5 +7,6 @@ data class Exercise(
     val name: String,
     val pictureUrl: String,
     val targetReps: Int,
+    val targetKg: Double,
     val trainingSets: List<TrainingSet>
 )

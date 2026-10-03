@@ -24,6 +24,4 @@ class KermitAppLogger: AppLogger {
     override fun v(message: String, tag: String?, throwable: Throwable?) {
         logger.e(throwable) { message }
     }
-
-
 }

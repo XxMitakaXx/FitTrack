@@ -6,5 +6,7 @@
 	<true/>
     <key>NSAllowsArbitraryLoads</key>
     <true/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to display your photos inside the app.</string>
 </dict>
 </plist>

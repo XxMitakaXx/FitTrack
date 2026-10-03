@@ -85,7 +85,7 @@ fun BodyWeightScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = paddingValues),
-            horizontalAlignment = Alignment.Start,
+            horizontalAlignment = Alignment.Start
         ) {
             val formatter = LocalDate.Format {
                 year()
@@ -116,7 +116,7 @@ fun BodyWeightScreen(
 
             if (state.progressBodyWeights.isNotEmpty()) {
                 ProgressBodyWeightsHistory(
-                    progressBodyWeights = state.progressBodyWeights,
+                    progressBodyWeightsEntries = state.progressBodyWeights,
                     unfoldedMonthWeightProgressesKeys = state.unfoldedMonthWeightProgressesKeys,
                     onMonthListClick = { onAction(BodyWeightAction.OnMonthListClick(dateString = it)) },
                     onProgressBodyWeightItemDelete = { onAction(BodyWeightAction.OnProgressBodyWeightItemDelete(dateString = it)) },

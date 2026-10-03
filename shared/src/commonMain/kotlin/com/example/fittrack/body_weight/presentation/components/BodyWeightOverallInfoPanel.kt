@@ -116,7 +116,7 @@ fun BodyWeightOverallInfoPanel(
                 )
             }
 
-            Spacer(modifier = Modifier.width(width = 120.dp))
+            Spacer(modifier = Modifier.width(width = 60.dp))
 
             Column(
                 verticalArrangement = Arrangement.Center,

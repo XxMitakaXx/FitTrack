@@ -71,4 +71,14 @@
     <string name="private">Private</string>
     <string name="saved">Saved</string>
     <string name="create_your_program">Create Your Program</string>
+    <string name="all_private_programs">All Private Programs</string>
+    <string name="program">Program</string>
+    <string name="create_exercise">Create Exercise</string>
+    <string name="exercise_image">Exercise Image</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="request_permission_for_photo_library">Request permission for photo library</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="exercise_with_that_name_already_exists">Exercise with that name already exists !</string>">
+    <string name="add_exercise">Add Exercise</string>
 </resources>
