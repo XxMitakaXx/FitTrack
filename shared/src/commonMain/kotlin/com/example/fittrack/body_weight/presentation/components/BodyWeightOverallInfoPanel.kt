@@ -228,22 +228,6 @@ fun BodyWeightOverallInfoPanel(
                         currentLevel += 10.0f
                     }
 
-//                    progressBodyWeights.forEach { progressBodyWeight ->
-//                        val text = progressBodyWeight.recordedAt.toString()
-//                        val measuredText = textMeasurer.measure(text = text, style = labelStyle)
-//                        val xPos = getX(progressBodyWeight.recordedAt)
-//
-//                        drawText(
-//                            textMeasurer = textMeasurer,
-//                            text = text,
-//                            style = labelStyle,
-//                            topLeft = Offset(
-//                                x = xPos - (measuredText.size.width / 2f),
-//                                y = size.height - measuredText.size.height
-//                            )
-//                        )
-//                    }
-
                     val path = Path()
                     var previousX = getX(progressBodyWeights[0].recordedAt)
                     var previousY = getY(progressBodyWeights[0].weight.toFloat())

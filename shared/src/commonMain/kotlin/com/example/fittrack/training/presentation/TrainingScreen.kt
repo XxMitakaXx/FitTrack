@@ -6,9 +6,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -56,7 +58,6 @@ fun TrainingScreen(
     onAction: (TrainingAction) -> Unit,
     bottomNavigationBar: @Composable () -> Unit
 ) {
-
     Scaffold(
         topBar = {
             TrainingScreenTopBar(
@@ -72,7 +73,9 @@ fun TrainingScreen(
         bottomBar = bottomNavigationBar
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues = paddingValues)
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.background)
+                .padding(paddingValues = paddingValues)
         ) {
             AnimatedContent(
                 targetState = state.isTrainScreenVisible,

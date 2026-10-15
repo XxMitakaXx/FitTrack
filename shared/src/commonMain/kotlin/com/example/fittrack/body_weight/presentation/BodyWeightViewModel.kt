@@ -99,7 +99,8 @@ class BodyWeightViewModel(
         selectedTimeFilter.value = progressBodyWeightTime
 
         _state.update { it.copy(
-            selectedTimeFilter = progressBodyWeightTime
+            selectedTimeFilter = progressBodyWeightTime,
+            unfoldedMonthWeightProgressesKeys = emptyList()
         ) }
     }
 

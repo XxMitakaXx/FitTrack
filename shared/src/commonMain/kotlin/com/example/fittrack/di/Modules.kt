@@ -17,6 +17,7 @@ import com.example.fittrack.programs.data.RemoteProgramDataSource
 import com.example.fittrack.training.data.RemoteUserTrainingDataSource
 import com.example.fittrack.programs.domain.ProgramDataSource
 import com.example.fittrack.programs.presentation.ProgramsViewModel
+import com.example.fittrack.terms_and_privacy_policy.TermsAndPrivacyPolicyViewModel
 import com.example.fittrack.training.domain.UserTrainingDataSource
 import com.example.fittrack.training.presentation.TrainingViewModel
 import com.example.fittrack.user_dimensions_data_collect.data.RemoteUserDimensionsDataSource
@@ -50,4 +51,5 @@ val sharedModule = module {
     viewModelOf(::UserDimensionsDataCollectViewModel)
     viewModelOf(::BodyWeightViewModel)
     viewModelOf(::AddExerciseViewModel)
+    viewModelOf(::TermsAndPrivacyPolicyViewModel)
 }
