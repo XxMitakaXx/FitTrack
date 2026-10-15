@@ -81,4 +81,10 @@
     <string name="description">Description</string>
     <string name="exercise_with_that_name_already_exists">Exercise with that name already exists !</string>">
     <string name="add_exercise">Add Exercise</string>
+    <string name="hero_rings">Hero Rings</string>
+    <string name="fitrack">Fitrack</string>
+    <string name="train_smarter_move_better">Train smarter, move better</string>
+    <string name="personal_plans_workout_tracking_and_progress_you_can_see">Personal plans, workout tracking, and progress you can see.</string>
+    <string name="by_continuing_you_agree_to_our_terms_and_privacy_policy">By continuing, you agree to our Terms and Privacy Policy.</string>
+    <string name="terms_and_privacy_policy">Terms &amp; Privacy</string>
 </resources>

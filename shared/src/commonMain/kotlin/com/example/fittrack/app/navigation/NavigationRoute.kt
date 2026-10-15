@@ -33,4 +33,7 @@ sealed interface NavigationRoute {
 
     @Serializable
     data object AddExerciseVarietyScreen
+
+    @Serializable
+    data object TermsAndPrivacyPolicyScreen
 }

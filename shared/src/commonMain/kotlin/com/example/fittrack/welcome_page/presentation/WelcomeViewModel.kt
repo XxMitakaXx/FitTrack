@@ -19,6 +19,15 @@ class WelcomeViewModel: ViewModel() {
             is WelcomeAction.OnGoToRegister -> {
                 navigateToRegister()
             }
+            is WelcomeAction.OnGoToTermsAndPrivacyPolicy -> {
+                navigateToTermsAndPrivacyPolicy()
+            }
+        }
+    }
+
+    private fun navigateToTermsAndPrivacyPolicy() {
+        viewModelScope.launch {
+            _events.send(element = WelcomeEvent.OnGoToTermsAndPrivacyPolicy)
         }
     }
 

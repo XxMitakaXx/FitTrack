@@ -23,7 +23,8 @@ fun AppNavigation(
         composable<NavigationRoute.WelcomeScreen> {
             WelcomeRoot(
                 onNavigateToLogin = { navController.navigate(route = NavigationRoute.LoginScreen) },
-                onNavigateToRegister = { navController.navigate(route = NavigationRoute.RegisterScreen) }
+                onNavigateToRegister = { navController.navigate(route = NavigationRoute.RegisterScreen) },
+                onNavigateTermsAndPrivacyPolicyScreen = { navController.navigate(route = NavigationRoute.TermsAndPrivacyPolicyScreen) }
             )
         }
 
@@ -93,6 +94,10 @@ fun AppNavigation(
             AddExerciseRoot(
                 onNavigateToProgramScreen = { navController.navigate(route = NavigationRoute.ProgramsScreen) }
             )
+        }
+
+        composable<NavigationRoute.TermsAndPrivacyPolicyScreen> {
+
         }
     }
 }

@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -84,7 +86,8 @@ fun BodyWeightScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues = paddingValues),
+                .padding(paddingValues = paddingValues)
+                .verticalScroll(state = rememberScrollState()),
             horizontalAlignment = Alignment.Start
         ) {
             val formatter = LocalDate.Format {
@@ -99,7 +102,10 @@ fun BodyWeightScreen(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val sortedByLocalDateProgressBodyWeights = state.progressBodyWeights.values.flatten().sortedBy { progressBodyWeight -> progressBodyWeight.recordedAt }
+                val sortedByLocalDateProgressBodyWeights = state.progressBodyWeights.values
+                    .flatten()
+                    .sortedBy { progressBodyWeight -> progressBodyWeight.recordedAt }
+
                 BodyWeightOverallInfoPanel(
                     averageBodyWeight = state.averageBodyWeight,
                     averageBodyWeightStartDate = state.averageBodyWeightStartDate.format(format = formatter),
@@ -123,6 +129,7 @@ fun BodyWeightScreen(
                 )
             } else {
                 Spacer(modifier = Modifier.height(height = 16.dp))
+
                 Box(
                     modifier = Modifier
                         .background(
@@ -153,50 +160,49 @@ fun BodyWeightScreen(
                     }
                 }
             }
+        }
+        
+        if (state.isPopupVisible) {
+            val verticalOffsetDp = (500).dp
+            val verticalOffsetPx = with(receiver = LocalDensity.current) { verticalOffsetDp.roundToPx() }
+            val transitionState = remember {
+                MutableTransitionState(initialState = false).apply { targetState = true }
+            }
 
-            if (state.isPopupVisible) {
-                val verticalOffsetDp = (500).dp
-                val verticalOffsetPx = with(receiver = LocalDensity.current) { verticalOffsetDp.roundToPx() }
-                val transitionState = remember {
-                    MutableTransitionState(initialState = false).apply { targetState = true }
-                }
+            if (transitionState.isIdle && !transitionState.currentState) {
+                onAction(BodyWeightAction.OnMakePopupNotVisible)
+            }
 
-                if (transitionState.isIdle && !transitionState.currentState) {
-                    onAction(BodyWeightAction.OnMakePopupNotVisible)
-                }
-
-                Popup(
-                    alignment = Alignment.Center,
-                    onDismissRequest = { transitionState.targetState = false },
-                    properties = PopupProperties(
-                        dismissOnClickOutside = true,
-                        focusable = true
-                    ),
-                    offset = IntOffset(x = 0, y = verticalOffsetPx)
+            Popup(
+                alignment = Alignment.Center,
+                onDismissRequest = { transitionState.targetState = false },
+                properties = PopupProperties(
+                    dismissOnClickOutside = true,
+                    focusable = true
+                ),
+                offset = IntOffset(x = 0, y = verticalOffsetPx)
+            ) {
+                AnimatedVisibility(
+                    visibleState = transitionState,
+                    enter = fadeIn(animationSpec = tween(durationMillis = 300)) +
+                            slideInVertically(
+                                animationSpec = tween(durationMillis = 300),
+                                initialOffsetY = { fullHeight -> fullHeight / 4 }
+                            ),
+                    exit = fadeOut(animationSpec = tween(durationMillis = 300)) +
+                            slideOutVertically(
+                                animationSpec = tween(durationMillis = 300),
+                                targetOffsetY = { fullHeight -> fullHeight / 4 }
+                            ),
+                    modifier = Modifier.padding(all = 16.dp)
                 ) {
-                    AnimatedVisibility(
-                        visibleState = transitionState,
-                        enter = fadeIn(animationSpec = tween(durationMillis = 300)) +
-                                slideInVertically(
-                                    animationSpec = tween(durationMillis = 300),
-                                    initialOffsetY = { fullHeight -> fullHeight / 4 }
-                                ),
-                        exit = fadeOut(animationSpec = tween(durationMillis = 300)) +
-                                slideOutVertically(
-                                    animationSpec = tween(durationMillis = 300),
-                                    targetOffsetY = { fullHeight -> fullHeight / 4 }
-                                ),
-                        modifier = Modifier.padding(all = 16.dp)
-                    ) {
-                        AddWeightPopupContent(
-                            state = state,
-                            onAction = onAction
-                        )
-                    }
+                    AddWeightPopupContent(
+                        state = state,
+                        onAction = onAction
+                    )
                 }
             }
         }
-
     }
 }
 
