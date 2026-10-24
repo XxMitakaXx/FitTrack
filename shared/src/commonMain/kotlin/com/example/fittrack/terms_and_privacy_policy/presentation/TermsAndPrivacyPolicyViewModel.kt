@@ -1,4 +1,4 @@
-package com.example.fittrack.terms_and_privacy_policy
+package com.example.fittrack.terms_and_privacy_policy.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

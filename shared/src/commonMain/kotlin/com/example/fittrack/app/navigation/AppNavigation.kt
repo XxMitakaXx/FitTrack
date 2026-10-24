@@ -10,6 +10,7 @@ import com.example.fittrack.app.presentation.login.LoginRoot
 import com.example.fittrack.app.presentation.register.RegisterRoot
 import com.example.fittrack.body_weight.presentation.BodyWeightRoot
 import com.example.fittrack.programs.presentation.ProgramsRoot
+import com.example.fittrack.terms_and_privacy_policy.presentation.TermsAndPrivacyPolicyRoot
 import com.example.fittrack.training.presentation.TrainingRoot
 import com.example.fittrack.user_dimensions_data_collect.presentation.UserDimensionsDataCollectRoot
 import com.example.fittrack.welcome_page.presentation.WelcomeRoot
@@ -97,7 +98,9 @@ fun AppNavigation(
         }
 
         composable<NavigationRoute.TermsAndPrivacyPolicyScreen> {
-
+            TermsAndPrivacyPolicyRoot(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }
