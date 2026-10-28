@@ -42,21 +42,28 @@ class RegisterViewModel(
                 is RegisterAction.OnTogglePasswordVisibility -> togglePasswordVisibility()
                 is RegisterAction.OnToggleConfirmPasswordVisibility -> toggleConfirmPasswordVisibility()
                 is RegisterAction.OnRegister -> register()
+                is RegisterAction.OnGoBack -> onGoBack()
                 else -> Unit
             }
+    }
+
+    private fun onGoBack() {
+        viewModelScope.launch {
+            _events.send(element = RegisterEvent.OnGoBack)
+        }
     }
 
     private fun checkPasswordAndConfirmPasswordAreEqual() {
         if (_state.value.password.trim() != _state.value.confirmPassword.trim()) {
             viewModelScope.launch {
                 _state.update { it.copy(
-                    isPasswordAndConfirmPasswordAreEqual = false
+                    arePasswordAndConfirmPasswordEqual = false
                 ) }
             }
         } else {
             viewModelScope.launch {
                 _state.update { it.copy(
-                    isPasswordAndConfirmPasswordAreEqual = true
+                    arePasswordAndConfirmPasswordEqual = true
                 ) }
             }
         }
@@ -68,10 +75,10 @@ class RegisterViewModel(
         checkLastNameIsBlank()
         checkEmailIsBlank()
         checkPasswordIsBlank()
-        checkEmail(_state.value.email)
+        checkEmail(email = _state.value.email)
 
         val isEmailValid = _state.value.isEmailValid
-        val isPasswordAndConfirmPasswordAreEqual = _state.value.isPasswordAndConfirmPasswordAreEqual
+        val isPasswordAndConfirmPasswordAreEqual = _state.value.arePasswordAndConfirmPasswordEqual
         val isFirstNameBlank = _state.value.isFirstNameBlank
         val isLastNameBlank = _state.value.isLastNameBlank
         val isEmailBlank = _state.value.isEmailBlank
@@ -79,7 +86,7 @@ class RegisterViewModel(
 
 
         if (
-            !_state.value.isPasswordAndConfirmPasswordAreEqual ||
+            !_state.value.arePasswordAndConfirmPasswordEqual ||
             _state.value.isFirstNameBlank ||
             _state.value.isLastNameBlank ||
             _state.value.isEmailBlank ||

@@ -7,4 +7,5 @@ sealed interface LoginAction {
     data object OnLogin: LoginAction
     data object OnLogout: LoginAction
     data object OnGoToRegister: LoginAction
+    data object OnGoBack: LoginAction
 }

@@ -32,13 +32,15 @@ fun AppNavigation(
         composable<NavigationRoute.LoginScreen> {
             LoginRoot(
                 onNavigateToRegister = { navController.navigate(route = NavigationRoute.RegisterScreen) },
-                onNavigateToTrainingScreen = { navController.navigate(route = NavigationRoute.TrainingScreen) }
+                onNavigateToTrainingScreen = { navController.navigate(route = NavigationRoute.TrainingScreen) },
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
         composable<NavigationRoute.RegisterScreen> {
             RegisterRoot(
-                onNavigateToLogin = { navController.navigate(route = NavigationRoute.LoginScreen) }
+                onNavigateToLogin = { navController.navigate(route = NavigationRoute.LoginScreen) },
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 

@@ -10,4 +10,5 @@ sealed interface RegisterAction {
     data object OnToggleConfirmPasswordVisibility: RegisterAction
     data object OnRegister: RegisterAction
     data object OnGoToLogin: RegisterAction
+    data object OnGoBack: RegisterAction
 }

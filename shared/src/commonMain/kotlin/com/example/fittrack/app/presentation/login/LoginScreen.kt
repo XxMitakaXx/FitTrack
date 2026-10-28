@@ -92,6 +92,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun LoginRoot(
     onNavigateToTrainingScreen: () -> Unit,
     onNavigateToRegister: () -> Unit,
+    onNavigateBack: () -> Unit,
     viewModel: LoginViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -99,6 +100,7 @@ fun LoginRoot(
     ObserveAsEvent(events = viewModel.events) { event ->
         when(event) {
             is LoginEvent.OnSuccessfulLogin -> onNavigateToTrainingScreen()
+            is LoginEvent.OnGoBack -> onNavigateBack()
             else -> Unit
         }
     }
@@ -140,7 +142,7 @@ fun LoginScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(
-                        onClick = {},
+                        onClick = { onAction(LoginAction.OnGoBack) },
                         modifier = Modifier
                             .padding(start = 16.dp)
                             .size(size = 45.dp),
@@ -167,6 +169,33 @@ fun LoginScreen(
                     subtitleContentColor = MaterialTheme.colorScheme.background
                 )
             )
+        },
+        bottomBar = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(resource = Res.string.dont_have_an_account),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+
+                TextButton(
+                    onClick = { onAction(LoginAction.OnGoToRegister) }
+                ) {
+                    Text(
+                        text = stringResource(resource = Res.string.create_account),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(height = 70.dp))
         }
     ) { paddingValues ->
         Column(
@@ -183,7 +212,7 @@ fun LoginScreen(
                     .weight(weight = 1f)
                     .verticalScroll(state = rememberScrollState())
             ) {
-                Spacer(modifier = Modifier.height(height = 8.dp))
+                Spacer(modifier = Modifier.height(height = 12.dp))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -192,34 +221,34 @@ fun LoginScreen(
                         imageVector = Icons.Outlined.LocalFireDepartment,
                         contentDescription = stringResource(resource = Res.string.hero_rings),
                         tint = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.size(size = 18.dp)
+                        modifier = Modifier.size(size = 22.dp)
                     )
 
                     Spacer(modifier = Modifier.width(width = 6.dp))
 
                     Text(
                         text = stringResource(resource = Res.string.fitrack),
-                        fontSize = 14.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.secondary
                     )
                 }
 
-                Spacer(modifier = Modifier.height(height = 8.dp))
+                Spacer(modifier = Modifier.height(height = 12.dp))
 
                 Text(
                     text = stringResource(resource = Res.string.welcome_back),
-                    fontSize = 28.sp,
+                    fontSize = 32.sp,
                     lineHeight = 34.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
-                Spacer(modifier = Modifier.height(height = 6.dp))
+                Spacer(modifier = Modifier.height(height = 10.dp))
 
                 Text(
                     text = stringResource(resource = Res.string.log_in_to_continue_your_training),
-                    fontSize = 14.sp,
+                    fontSize = 18.sp,
                     lineHeight = 21.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -238,10 +267,13 @@ fun LoginScreen(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
                     ),
+                    keyboardActions = KeyboardActions(
+                        onNext = { focusManager.moveFocus(focusDirection = FocusDirection.Next) }
+                    ),
                     colors = loginFieldColors()
                 )
 
-                Spacer(modifier = Modifier.height(height = 12.dp))
+                Spacer(modifier = Modifier.height(height = 16.dp))
 
                 OutlinedTextField(
                     value = state.password,
@@ -266,6 +298,9 @@ fun LoginScreen(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
                     ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { focusManager.clearFocus() }
+                    ),
                     colors = loginFieldColors()
                 )
 
@@ -281,7 +316,7 @@ fun LoginScreen(
                     ) {
                         Text(
                             text = stringResource(resource = Res.string.forgot_password),
-                            fontSize = 14.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -298,7 +333,7 @@ fun LoginScreen(
                 ) {
                     Text(
                         text = stringResource(resource = Res.string.login),
-                        fontSize = 15.sp,
+                        fontSize = 19.sp,
                         fontWeight = FontWeight.Medium
                     )
                 }
@@ -316,7 +351,7 @@ fun LoginScreen(
                     Text(
                         text = stringResource(resource = Res.string.or_continue_with),
                         modifier = Modifier.padding(horizontal = 12.dp),
-                        fontSize = 12.sp,
+                        fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
@@ -347,128 +382,7 @@ fun LoginScreen(
 
                     Spacer(modifier = Modifier.height(height = 16.dp))
                 }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(resource = Res.string.dont_have_an_account),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    TextButton(
-                        onClick = { onAction(LoginAction.OnGoToRegister) }
-                    ) {
-                        Text(
-                            text = stringResource(resource = Res.string.create_account),
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
             }
-
-
-//            Text(
-//                text = stringResource(resource = Res.string.login),
-//                fontSize = 40.sp,
-//                fontWeight = FontWeight.Medium,
-//                color = MaterialTheme.colorScheme.primary
-//            )
-//
-//            Spacer(modifier = Modifier.height(70.dp))
-//
-//            OutlinedTextField(
-//                value = state.email,
-//                onValueChange = { onAction(LoginAction.OnEmailValueChange(email = it)) },
-//                singleLine = true,
-//                label = { Text(text = stringResource(resource = Res.string.email)) },
-//                modifier = Modifier
-//                    .padding(all = 10.dp)
-//                    .focusRequester(focusRequester = focusRequester),
-//                keyboardOptions = KeyboardOptions(
-//                    keyboardType = KeyboardType.Email,
-//                    imeAction = ImeAction.Next
-//                ),
-//                keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) }),
-//                colors = textFieldColors,
-//                shape = RoundedCornerShape(size = 16.dp)
-//            )
-//
-//            Spacer(modifier = Modifier.height(height = 20.dp))
-//
-//            OutlinedTextField(
-//                value = state.password,
-//                onValueChange = { onAction(LoginAction.OnPasswordValueChange(password = it)) },
-//                singleLine = true,
-//                label = { Text(text = stringResource(resource = Res.string.password)) },
-//                modifier = Modifier
-//                    .padding(all = 10.dp)
-//                    .focusRequester(focusRequester = focusRequester),
-//                visualTransformation = if (!state.isPasswordVisible) PasswordVisualTransformation() else VisualTransformation.None,
-//                keyboardOptions = KeyboardOptions(
-//                    keyboardType = KeyboardType.Password,
-//                    imeAction = ImeAction.Done
-//                ),
-//                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-//                colors = textFieldColors,
-//                trailingIcon = {
-//                    val icon = if (state.isPasswordVisible) Icons.Default.Lock else Icons.Default.CheckCircle
-//                    val description = if (state.isPasswordVisible) stringResource(resource = Res.string.hide_password) else stringResource(resource = Res.string.show_password)
-//                    IconButton(
-//                        onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }
-//                    ) {
-//                        Icon(
-//                            imageVector = icon,
-//                            contentDescription = description
-//                        )
-//                    }
-//                },
-//                shape = RoundedCornerShape(size = 16.dp)
-//            )
-//
-//            Spacer(modifier = Modifier.height(height = 20.dp))
-//
-//            TextButton(
-//                onClick = { onAction(LoginAction.OnLogin) },
-//                modifier = Modifier.width(width = 130.dp),
-//                colors = ButtonColors(
-//                    containerColor = MaterialTheme.colorScheme.primary,
-//                    contentColor = MaterialTheme.colorScheme.onPrimary,
-//                    disabledContainerColor = Color.Unspecified,
-//                    disabledContentColor = Color.Unspecified
-//                )
-//            ) {
-//                Text(
-//                    text = stringResource(resource = Res.string.login),
-//                    fontSize = 16.sp
-//                )
-//            }
-//
-//            if (state.badCredentials) {
-//                Spacer(modifier = Modifier.height(height = 30.dp))
-//
-//                Text(
-//                    text = stringResource(resource = Res.string.email_ot_password_is_invalid),
-//                    color = MaterialTheme.colorScheme.error
-//                )
-//            }
-//
-//            Spacer(modifier = Modifier.height(height = 30.dp))
-//
-//            TextButton(
-//                onClick = {onAction(LoginAction.OnGoToRegister)}
-//            ) {
-//                Text(
-//                    text = stringResource(resource = Res.string.dont_have_an_account),
-//                    fontSize = 16.sp
-//                )
-//            }
         }
     }
 }
@@ -482,7 +396,7 @@ private fun SocialButton(
 ) {
     OutlinedButton(
         onClick = { onClick() },
-        modifier = modifier.height(height = 48.dp),
+        modifier = modifier.height(height = 52.dp),
         shape = RoundedCornerShape(size = 24.dp),
         border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline),
         colors = ButtonDefaults.outlinedButtonColors(
@@ -492,14 +406,14 @@ private fun SocialButton(
         Icon(
             painter = icon,
             contentDescription = stringResource(resource = Res.string.social_media),
-            modifier = Modifier.size(size = 18.dp)
+            modifier = Modifier.size(size = 22.dp)
         )
 
         Spacer(modifier = Modifier.width(width = 8.dp))
 
         Text(
             text = text,
-            fontSize = 14.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Medium
         )
     }

@@ -98,4 +98,7 @@
     <string name="google">Google</string>
     <string name="apple">Apple</string>
     <string name="create_account">Create Account</string>
+    <string name="sign_up_to_start_your_training">Sign up to start your training.</string>
+    <string name="person">Person</string>
+    <string name="first_name_can_not_be_empty">First name can not be empty.</string>
 </resources>

@@ -40,7 +40,14 @@ class LoginViewModel(
             is LoginAction.OnTogglePasswordVisibility -> togglePasswordVisibility()
             is LoginAction.OnLogin -> login()
             is LoginAction.OnLogout -> logout()
+            is LoginAction.OnGoBack -> onGoBack()
             else -> Unit
+        }
+    }
+
+    private fun onGoBack() {
+        viewModelScope.launch {
+            _events.send(element = LoginEvent.OnGoBack)
         }
     }
 

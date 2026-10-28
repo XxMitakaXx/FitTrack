@@ -13,7 +13,7 @@ data class RegisterState(
     val isConfirmPasswordVisible: Boolean = false,
     val emailExists: Boolean = false,
     val isEmailValid: Boolean = true,
-    val isPasswordAndConfirmPasswordAreEqual: Boolean = true,
+    val arePasswordAndConfirmPasswordEqual: Boolean = true,
     val isFirstNameBlank: Boolean = false,
     val isLastNameBlank: Boolean = false,
     val isEmailBlank: Boolean = false,

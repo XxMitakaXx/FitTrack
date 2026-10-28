@@ -145,7 +145,7 @@ fun WelcomeScreen(
                     onClick = { onAction(WelcomeAction.OnGoToLogin) },
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.95f)
-                        .height(height = 70.dp)
+                        .height(height = 60.dp)
                         .clip(shape = RoundedCornerShape(size = 32.dp))
                         .padding(horizontal = 30.dp),
                     colors = ButtonColors(
@@ -162,13 +162,13 @@ fun WelcomeScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(height = 10.dp))
+                Spacer(modifier = Modifier.height(height = 20.dp))
 
                 OutlinedButton(
                     onClick = { onAction(WelcomeAction.OnGoToRegister) },
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.95f)
-                        .height(height = 70.dp)
+                        .height(height = 60.dp)
                         .clip(shape = RoundedCornerShape(size = 32.dp))
                         .padding(horizontal = 30.dp),
                     border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline),

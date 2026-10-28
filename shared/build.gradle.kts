@@ -42,7 +42,6 @@ kotlin {
             implementation(libs.androidx.datastore.tink)
             implementation(libs.tink.android)
 
-
             implementation(libs.compose.uiToolingPreview)
         }
         commonMain.dependencies {
